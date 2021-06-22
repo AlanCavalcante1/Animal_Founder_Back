@@ -1,27 +1,5 @@
 class AuthenticationController < ApplicationController
 
-  def sign_up
-    @user = User.new(user_params)
-    if @user.save
-      PasswordMailer.with(user: @user, url: request.base_url).confirmation.deliver_now
-      render json: {user: UserSerializer.new(@user)}, status: 201
-    else
-      render json: @user.errors, status: :unprocessable_entity
-    end
-  end
-
-  def login
-    user = User.find_by(email: params[:user][:email])
-    user = user&.authenticate(params[:user][:password])
-
-    if user
-      token = JsonWebToken.encode(user_id: user.id)
-      render json: {token: token, user: UserSerializer.new(user)}
-    else
-      render json: {message: "Nao foi possovel fazer login"}, status: 401
-    end
-  end
-
   def confirm
     if params[:validation_token].present?
 

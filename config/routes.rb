@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   #SignUp and Login
-  post '/sign_up', to: 'authentication#sign_up'
-  post '/login', to: 'authentication#login'
+  post '/sign_up', to: 'register#sign_up'
+  post '/login', to: 'session#login'
 
   #Authentication
   post '/authentication/confirm/:validation_token', to: 'authentication#confirm'
