@@ -4,7 +4,7 @@ class AuthenticationController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      render json: @user, status: :created, location: @user
+      render json: {user: UserSerializer.new(@user)}, status: 201
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -16,7 +16,7 @@ class AuthenticationController < ApplicationController
 
     if user
       token = JsonWebToken.encode(user_id: user.id)
-      render json: {token: token, user: user}
+      render json: {token: token, user: UserSerializer.new(user)}
     else
       render json: {message: "Nao foi possovel fazer login"}, status: 401
     end
