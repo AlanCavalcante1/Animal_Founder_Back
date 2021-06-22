@@ -3,4 +3,4 @@
 <p>
   Confirme sua conta clicando no botão abaixo
 </p>
-<%= "localhost:3000/confirmate/?key="+@user.name %>
+<%= "#{@url}/confirmate/?key="+@user.validation_token %>
