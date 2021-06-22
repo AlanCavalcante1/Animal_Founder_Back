@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2021_06_22_181903) do
     t.datetime "updated_at", null: false
     t.boolean "is_valid", default: false
     t.string "validation_token"
-    t.datetime "validation_token_sent_at"
+    t.datetime "validation_token_expiry_at"
   end
 
 end
