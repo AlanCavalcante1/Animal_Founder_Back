@@ -1,0 +1,6 @@
+<h1>Caro, <%= @user.name %>, Bem vindo ao sistema da ONG Animal Finder</h1>
+
+<p>
+  Você esta muito proximo de se cadastrar no nosso sistema, so peçamos que confirme acesso a esse email, clicando no link a baixo:
+</p>
+<%= link_to "Confirme sua conta",  "#{@url}/authentication/confirm/#{@user.validation_token}" %>
