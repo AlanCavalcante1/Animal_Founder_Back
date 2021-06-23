@@ -8,7 +8,7 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :password, presence: true, length: {minimum:6, maximum: 16}, :if => :password
   validates :email, presence: true, uniqueness: true, format: { with: VALIDATE_EMAIL_FORMAT, message: "formato de email incorreto" }, length:{maximum:100}
-  validates :cellphone, presence: true, format: {with: VALIDATE_CELLPHONE_FORMAT, message: "formato do numero de celular incorreto"}
+  validates :cellphone, format: {with: VALIDATE_CELLPHONE_FORMAT, message: "formato do numero de celular incorreto"}
   
   before_save {self.email = email.downcase}
   before_create :generation_validation_token
