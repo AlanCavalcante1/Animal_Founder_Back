@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :animals
   #SignUp and Login
   post '/sign_up', to: 'register#sign_up'
   post '/login', to: 'session#login'
