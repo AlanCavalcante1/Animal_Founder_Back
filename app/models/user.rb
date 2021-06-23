@@ -1,6 +1,16 @@
 class User < ApplicationRecord
   has_secure_password
 
+  VALIDATE_CELLPHONE_FORMAT = /\A\(([0-9]{2})\)([0-9]{4,5})(\-?)([0-9]{4})\Z/
+  VALIDATE_EMAIL_FORMAT = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
+
+  validates :name, presence: true
+  validates :email, presence: true, uniqueness: true, format: { with: VALIDATE_EMAIL_FORMAT, message: "formato de email incorreto" }
+  validates :password, presence: true, length: {minimum:6}, :if => :password
+  validates :cellphone, presence: true, format: {with: VALIDATE_CELLPHONE_FORMAT, message: "formato do numero de celular incorreto"}
+  
+
+
   before_create :generation_validation_token
 
   def generation_validation_token
