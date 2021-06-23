@@ -4,8 +4,10 @@ Rails.application.routes.draw do
   post '/sign_up', to: 'register#sign_up'
   post '/login', to: 'session#login'
 
+  get '/animals/page/:page', to: 'animals#page'
+
   #Authentication
-  post '/authentication/confirm/:validation_token', to: 'authentication#confirm'
+  get '/authentication/confirm/:validation_token', to: 'authentication#confirm'
   post '/authentication/repeat_token', to: "authentication#repeat_validation_token"
 
   #User
