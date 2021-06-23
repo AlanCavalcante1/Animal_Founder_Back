@@ -26,7 +26,7 @@ class AnimalsController < ApplicationController
 
   # PATCH/PUT /animals/1
   def update
-    if @animal.update(animal_params)
+    if @animal.update(edit_params)
       render json: @animal
     else
       render json: @animal.errors, status: :unprocessable_entity
@@ -46,6 +46,10 @@ class AnimalsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def animal_params
-      params.permit(:photo, :name, :age, :description, :city, :state, :status, :user_id)
+      params.permit(:photo, :name, :age, :description, :city, :state, :user_id)
+    end
+
+    def edit_params
+      params.permit(:photo, :name, :age, :description, :city, :state, :status)
     end
 end
