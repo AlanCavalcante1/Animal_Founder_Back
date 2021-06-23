@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_23_155837) do
+ActiveRecord::Schema.define(version: 2021_06_23_180510) do
 
   create_table "animals", force: :cascade do |t|
     t.string "photo"
@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2021_06_23_155837) do
     t.integer "age"
     t.string "description"
     t.string "city"
-    t.string "state"
+    t.integer "state", default: 0
     t.integer "status", default: 0
     t.integer "user_id"
     t.datetime "created_at", null: false
