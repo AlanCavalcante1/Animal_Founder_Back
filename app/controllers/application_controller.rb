@@ -10,4 +10,8 @@ class ApplicationController < ActionController::API
     user = User.find_by(id: @decoded[0]['user_id'])
     return user
   end
+
+  rescue_from CanCan::AccessDenied do |exception|
+    render json: {message: "Permissao Negada, você não tem permissão a esse acesso"}, status: 403
+  end
 end

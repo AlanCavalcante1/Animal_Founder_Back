@@ -1,5 +1,6 @@
 class AnimalsController < ApplicationController
   before_action :set_animal, only: [:show, :update, :destroy]
+  load_and_authorize_resource
 
   # GET /animals
   def index
@@ -15,6 +16,7 @@ class AnimalsController < ApplicationController
 
   # POST /animals
   def create
+    
     @animal = Animal.new(animal_params)
 
     if @animal.save
@@ -38,6 +40,43 @@ class AnimalsController < ApplicationController
     @animal.destroy
   end
 
+  def animal_page
+    
+    page = params[:page].to_i - 1
+    page = 0 if page < 0 
+      
+    animals_per_page = 15
+    start = page * animals_per_page
+    
+    animals = Animal.where(status: "lost")
+    animals_recent_add = animals.reverse
+    animals_to_page = animals_recent_add.slice(start, animals_per_page)
+    
+    render json: {animals: animals_to_page}
+  end
+
+  def answer
+
+    unless params[:message].present?
+      return render json: {error: "A mensagem é obrigatória"}, status: 400
+    end
+    
+    animal = Animal.find_by(id: params[:animal])
+    unless animal.present?
+      return render json: {error: "Animal não encontrado"}, status: 404
+    end
+
+    unless animal.status == 'lost'
+      return render json: {error: "Animal não se encontra desaparecido"}, status: 400
+    end
+
+    answer = Answer.create!(user_id: current_user.id, animal_id: animal.id, message: params[:message])
+    animal.update_attributes(status: 1)
+    AnswerMailer.with(informant: current_user, animal: animal, message: params[:message], url: request.base_url).notice.deliver_now
+    render json: {answer: answer}, status:201
+  
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_animal
@@ -51,5 +90,9 @@ class AnimalsController < ApplicationController
 
     def edit_params
       params.permit(:photo, :name, :age, :description, :city, :state, :status)
+    end
+
+    def answer_params
+      params.permit(:message)
     end
 end
