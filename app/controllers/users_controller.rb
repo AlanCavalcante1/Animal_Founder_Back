@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
+  load_and_authorize_resource
 
   # GET /users
   def index
@@ -36,6 +37,11 @@ class UsersController < ApplicationController
   # DELETE /users/1
   def destroy
     @user.destroy
+  end
+
+  def my_animals
+    animals = Animal.where(user_id: current_user.id)
+    render json: animals
   end
 
   private

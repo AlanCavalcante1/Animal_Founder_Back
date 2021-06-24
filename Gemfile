@@ -16,6 +16,8 @@ gem 'puma', '~> 3.11'
 gem 'bcrypt', '~> 3.1.7'
 gem 'jwt'
 gem 'active_model_serializers'
+gem 'carrierwave'
+gem 'cancancan'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 

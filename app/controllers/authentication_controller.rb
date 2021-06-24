@@ -4,6 +4,7 @@ class AuthenticationController < ApplicationController
     if params[:validation_token].present?
 
       @user = User.find_by(validation_token: params[:validation_token])
+      
       if @user.present?
         if @user.validate_user?(params[:validation_token])
           render json: @user
@@ -23,9 +24,11 @@ class AuthenticationController < ApplicationController
   def repeat_validation_token
     @user = User.find_by(email: params[:email])
     if @user.present?
-      if @user.generation_validation_token
+      if @user.generation_validation_token && @user.save
         PasswordMailer.with(user: @user, url: request.base_url).confirmation.deliver_now
         render json: {status: "Ok"}
+      else
+        render json: {error: "Ocorreu um erro"}, status: 401
       end
     else
       render json: {error: "Email não encontrado"}

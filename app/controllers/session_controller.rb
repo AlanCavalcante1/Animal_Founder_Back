@@ -4,10 +4,13 @@ class SessionController < ApplicationController
     user = user&.authenticate(params[:user][:password])
 
     if user
+      if user.is_valid == false
+        return render json: {message: "Usuario não esta validado via email"}
+      end
       token = JsonWebToken.encode(user_id: user.id)
       render json: {token: token, user: UserSerializer.new(user)}
     else
-      render json: {message: "Nao foi possovel fazer login"}, status: 401
+      render json: {message: "Email ou senha incorretos"}, status: 401
     end
   end
 

@@ -1,0 +1,17 @@
+<h2>Caro <%= @animal.user.name %>,</h2>
+<p>
+  Uma pessoa reportou informações sobre <b><%= @animal.name %></b>
+  <br>
+  Segue a mensagem informada e o contato da pessoa caso deseje tirar duvidas:
+  <br>
+  <b>Mensagem</b>: <%= @message %>
+  <br>
+  <b>Contato:</b>
+  <br>
+  Nome: <%= @informant.name %>
+  <br>
+  Telefone: <%= @informant.cellphone %>
+  <br>
+  Email: <%= @informant.email %>
+</p>
+

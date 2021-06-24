@@ -1,0 +1,9 @@
+Caro <%= @animal.user.name %>,
+Uma pessoa reportou informações sobre <%= @animal.name %>
+Segue a mensagem informada e o contato da pessoa caso deseje tirar duvidas:
+Mensagem: <%= @message %>
+Contato: 
+  Nome: <%= @informant.name %>
+  Telefone: <%= @informant.cellphone %>
+  Email: <%= @informant.email %>
+

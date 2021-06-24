@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
+  has_many :animals, dependent: :destroy
 
   VALIDATE_CELLPHONE_FORMAT = /\A\(([0-9]{2})\)([0-9]{4,5})(\-?)([0-9]{4})\Z/
   VALIDATE_EMAIL_FORMAT = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
