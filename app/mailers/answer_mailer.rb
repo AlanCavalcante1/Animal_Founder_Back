@@ -6,6 +6,6 @@ class AnswerMailer < ApplicationMailer
     @message = params[:message]
     @url = params[:url]
 
-    mail(to: @animal.user.email, subject: "Temos noticias de seu animal")
+    mail(to: @animal.user.email, subject: "Animal Founder - Noticias de seu animal")
   end
 end
