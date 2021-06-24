@@ -1,5 +1,6 @@
 class Animal < ApplicationRecord
   belongs_to :user
+  has_many :answers 
 
   mount_uploader :photo, ImageUploader
 
