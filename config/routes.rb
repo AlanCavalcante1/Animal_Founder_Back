@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
-  resources :animals
   #SignUp and Login
   post '/sign_up', to: 'register#sign_up'
   post '/login', to: 'session#login'
 
+  #Animal
   get '/animals/page/:page', to: 'animals#page'
+  post '/animals/answer/:animal', to: 'animals#answer'
+  resources :animals
 
   #Authentication
   get '/authentication/confirm/:validation_token', to: 'authentication#confirm'
