@@ -55,6 +55,21 @@ class AnimalsController < ApplicationController
     render json: {animals: animals_to_page}
   end
 
+  def answer
+    animal = Animal.find_by(id: params[:animal])
+    unless animal.present?
+      return render json: {error: "Animal não encontrado"}, status: 404
+    end
+
+    unless animal.status == 'lost'
+      return render json: {error: "Animal não se encontra desaparecido"}, status: 400
+    end
+
+    answer = Animal.create({user_id: current_user.id, animal_id: animal.id})
+    #Criar Mailer enviando user dono do animal dados do encontrador
+
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_animal
