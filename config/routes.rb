@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   post '/authentication/repeat_token', to: "authentication#repeat_validation_token"
 
   #User
-  resources :users
+  resources :users, except: [:create]
 
   #Password
 
