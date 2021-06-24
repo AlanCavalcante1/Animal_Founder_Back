@@ -30,6 +30,17 @@ class User < ApplicationRecord
     end
   end
 
+  def is_token_valid?
+    self.validation_token_expiry_at + 2.days > Time.now
+  end
+
+  def reset_password!(password, password_confirmation)
+    self.validation_token = nil
+    self.password = password
+    self.password_confirmation = password_confirmation  
+    return true if self.save
+  end
+
   private
     def generate_random_token
       return SecureRandom.alphanumeric(15)
