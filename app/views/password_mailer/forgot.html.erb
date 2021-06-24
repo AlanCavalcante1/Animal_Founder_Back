@@ -1,5 +1,7 @@
-<h1>Password#forgot</h1>
+<h1>Esqueceu sua senha?</h1>
 
-<p>
-  <%= @greeting %>, find me in app/views/password_mailer/forgot.html.erb
-</p>
+<p> Clique no link abaixo para ir à pagina de mudança de senha: </p>
+
+<%= link_to "Clique aqui para mudar sua senha", "#{@url}/recover_password/"+@user. validation_token %> 
+
+<p>O link acima te levaria para uma pagina no frontend</p>
