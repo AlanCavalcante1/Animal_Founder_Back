@@ -56,6 +56,11 @@ class AnimalsController < ApplicationController
   end
 
   def answer
+
+    unless params[:message].present?
+      return render json: {error: "A mensagem é obrigatória"}, status: 400
+    end
+    
     animal = Animal.find_by(id: params[:animal])
     unless animal.present?
       return render json: {error: "Animal não encontrado"}, status: 404
@@ -65,9 +70,11 @@ class AnimalsController < ApplicationController
       return render json: {error: "Animal não se encontra desaparecido"}, status: 400
     end
 
-    answer = Animal.create({user_id: current_user.id, animal_id: animal.id})
-    #Criar Mailer enviando user dono do animal dados do encontrador
-
+    answer = Answer.create!(user_id: current_user.id, animal_id: animal.id, message: params[:message])
+    animal.update_attributes(status: 1)
+    AnswerMailer.with(informant: current_user, animal: animal, message: params[:message], url: request.base_url).notice.deliver_now
+    render json: answer
+  
   end
 
   private
@@ -83,5 +90,9 @@ class AnimalsController < ApplicationController
 
     def edit_params
       params.permit(:photo, :name, :age, :description, :city, :state, :status)
+    end
+
+    def answer_params
+      params.permit(:message)
     end
 end
