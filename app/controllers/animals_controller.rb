@@ -1,9 +1,6 @@
 class AnimalsController < ApplicationController
   before_action :set_animal, only: [:show, :update, :destroy]
-
-  rescue_from CanCan::AccessDenied do |exception|
-    render json: {message: "Permissao Negada, você não tem permissão a esse acesso"}, status: 403
-  end
+  load_and_authorize_resource
 
   # GET /animals
   def index
@@ -43,8 +40,11 @@ class AnimalsController < ApplicationController
     @animal.destroy
   end
 
-  def page
+  def animal_page
+    
     page = params[:page].to_i - 1
+    page = 0 if page < 0 
+      
     animals_per_page = 15
     start = page * animals_per_page
     
@@ -73,8 +73,14 @@ class AnimalsController < ApplicationController
     answer = Answer.create!(user_id: current_user.id, animal_id: animal.id, message: params[:message])
     animal.update_attributes(status: 1)
     AnswerMailer.with(informant: current_user, animal: animal, message: params[:message], url: request.base_url).notice.deliver_now
-    render json: answer
+    render json: {answer: answer}, status:201
   
+  end
+
+  def my_animals
+    byebug
+    animals = Animal.where(user_id: current_user.id)
+    render json: {animals: animals}
   end
 
   private
