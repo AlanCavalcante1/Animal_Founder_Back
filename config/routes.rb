@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   resources :users, except: [:create]
 
   #Password
+  post '/password/forgot', to: 'password#forgot'
+  post '/recover_password/:token', to 'password#reset'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
