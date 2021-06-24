@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   post '/login', to: 'session#login'
 
   #Animal
-  get '/animals/page/:page', to: 'animals#page'
+  get '/animals/page/:page', to: 'animals#animal_page'
   post '/animals/answer/:animal', to: 'animals#answer'
   resources :animals
 
@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   post '/authentication/repeat_token', to: "authentication#repeat_validation_token"
 
   #User
+  get '/users/animals', to: 'users#my_animals'
   resources :users, except: [:create]
 
   #Password
