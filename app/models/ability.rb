@@ -16,7 +16,8 @@ class Ability
     if user && user.is_valid
       
       can [:update, :destroy], user
-      can [:create, :destroy, :update, :animal_page, :answer, :read, :my_animals], Animal, user_id: user.id
+      can :my_animals, User
+      can [:create, :destroy, :update, :animal_page, :answer], Animal, user_id: user.id
       
 
     else
